@@ -17,12 +17,9 @@ passwordSchema
 
 module.exports = (req,res,next) => {
   if(passwordSchema.validate(req.body.password))
-  {
-    next()
+      next()
     
-  }
   else
-  {
-return res.status(400).json({message:"Veuillez saisir un mot de passe comprenant : 8 caractères , 1 majuscules , 1 minuscules et 1 chiffres"})
-  }  
+      return res.status(400).json({message:"Veuillez saisir un mot de passe comprenant : 8 caractères , 1 majuscules , 1 minuscules et 1 chiffres"})
+   
 }
