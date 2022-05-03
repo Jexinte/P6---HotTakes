@@ -20,8 +20,8 @@ module.exports = (req,res,next) => {
 
     catch 
     {
-        res.status(400).json({
-            error:"Bad Request !"
+        res.status(401).json({
+            error:`L'utilisateur ${userId} n'est pas autorisé à effectué cette action`
         })
     }
 }

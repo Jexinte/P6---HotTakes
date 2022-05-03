@@ -25,18 +25,34 @@ exports.getSauceById = (req,res) =>
 // Création d'une sauce
 exports.createSauce = (req,res) => 
 {
-    const sauceObject = JSON.parse(req.body.sauce)
-    const sauces = new Sauces (
-    {
-        ...sauceObject,
-        // Chemin de l'image
-        imageUrl:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-    })
     
-    sauces.save()
 
-        .then(() => res.status(201).json({message : "La sauce a bien été enregistrée "}))
-        .catch(error => res.status(400).json(error))
+   const sauceObject = JSON.parse(req.body.sauce);
+  
+    let onlyLettersExist = new RegExp(/[a-zA-Z\s]+$/)
+    if(onlyLettersExist.test(sauceObject.name) && onlyLettersExist.test(sauceObject.manufacturer) && onlyLettersExist.test(sauceObject.description) && onlyLettersExist.test(sauceObject.mainPepper)){
+
+
+        const sauces = new Sauces (
+            {
+                ...sauceObject,
+                // Chemin de l'image
+                imageUrl:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+                
+            })
+            // console.log(onlyLettersExist.test(sauceObject.name))
+            sauces.save()
+          
+            .then(() => res.status(201).json({message : "La sauce a bien été enregistrée "}))
+            .catch(error => res.status(400).json(error))
+            
+            
+        }
+
+        else
+            res.status(401).json({message:"L'utilisation de chiffres n'est pas autorisé dans les champs suivants: Name,Manufacturer , Description et Main Pepper Ingredient"})
+     
+    
 
 }
 // Modification d'une sauce

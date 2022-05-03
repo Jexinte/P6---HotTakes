@@ -18,7 +18,7 @@ exports.signUp = (req,res)=>
     
         
         // Vérification du format de l'adresse mail
-        if(regexMail.test(bodyMail) === true)
+        if(regexMail.test(bodyMail))
         {
             const users = new User({
                 email : bodyMail,
